@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { faker } from '@faker-js/faker'
-import withToggles from './HOC'
 
 const products = Array.from({ length: 20 }, () => {
   return {
@@ -74,24 +73,19 @@ function List({ title, items, render }) {
   )
 }
 
-function ProductList({ title, items }) {
-  return (
-    <ul className='list'>
-      {items.map((product) => (
-        <ProductItem key={product.productName} product={product} />
-      ))}
-    </ul>
-  )
-}
-
-const ProductListWithToggles = withToggles(ProductList)
-
 const App = () => {
   return (
     <div>
       <h1>Render Props Demo</h1>
 
       <div className='col-2'>
+        <List
+          title='Products'
+          items={products}
+          render={(product) => (
+            <ProductItem key={product.productName} product={product} />
+          )}
+        />
         <List
           title='companies'
           items={companies}
@@ -103,11 +97,6 @@ const App = () => {
             />
           )}
         />
-      </div>
-
-      <div className='col-2'>
-        {/* <ProductList title='Producs' items={products} /> */}
-        <ProductListWithToggles title='Producs' items={products} />
       </div>
     </div>
   )
